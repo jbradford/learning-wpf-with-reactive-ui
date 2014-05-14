@@ -7,7 +7,9 @@ namespace Reactive_Learning_App
     {
         public AppBootstrapper()
         {
-            RxApp.MutableResolver.Register(()=>new TweetLine(), typeof (IViewFor<TweetViewModel>));
+            var resolver = RxApp.MutableResolver;
+
+            resolver.Register(() => new TweetLine(), typeof (IViewFor<TweetViewModel>));
 
             ConfigureLogging();
             ConfigureIdentity();

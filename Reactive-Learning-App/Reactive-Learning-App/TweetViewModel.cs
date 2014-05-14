@@ -9,16 +9,24 @@ namespace Reactive_Learning_App
 {
     public class TweetViewModel : ReactiveObject
     {
-        private string _TextBlock;
-        public string TextBlock
+        private string _tweetText;
+        public string TweetText
         {
-            get { return _TextBlock; }
-            set { this.RaiseAndSetIfChanged(ref _TextBlock, value); }
+            get { return _tweetText; }
+            set { this.RaiseAndSetIfChanged(ref _tweetText, value); }
         }
 
-        public TweetViewModel(string text)
+        private string _user;
+        public string User
         {
-            TextBlock = text;
+            get { return _user; }
+            set { this.RaiseAndSetIfChanged(ref _user, value); }
+        }
+
+        public TweetViewModel(string user, string tweetText)
+        {
+            User = user;
+            TweetText = tweetText;
         }
     }
 }

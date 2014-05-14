@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LinqToTwitter;
 using ReactiveUI;
 
 namespace Reactive_Learning_App
@@ -12,12 +14,19 @@ namespace Reactive_Learning_App
     {
         public MainWindowViewModel()
         {
-            Tweets = new ReactiveList<TweetViewModel>();
-            Tweets.Add(new TweetViewModel("Woftam1"));
-            Tweets.Add(new TweetViewModel("Woftam2"));
-            Tweets.Add(new TweetViewModel("Woftam3"));
-            Tweets.Add(new TweetViewModel("Woftam4"));
-            Tweets.Add(new TweetViewModel("Woftam5"));
+            var auth = new SingleUserAuthorizer
+            {
+                CredentialStore = new SingleUserInMemoryCredentialStore
+                {
+                    ConsumerKey = ConfigurationManager.AppSettings["consumerKey"],
+                    ConsumerSecret = ConfigurationManager.AppSettings["consumerSecret"],
+                    AccessToken = ConfigurationManager.AppSettings["accessToken"],
+                    AccessTokenSecret = ConfigurationManager.AppSettings["accessTokenSecret"]
+                }
+            };
+
+            var twitterCtx = new TwitterContext(auth);
+            Tweets = new ReactiveList<TweetViewModel>(twitterCtx.Status.Where(f => f.Type == StatusType.Home).Select(f => new TweetViewModel(f.User.Name,f.Text)));
         }
 
         private ReactiveList<TweetViewModel> _tweets;
