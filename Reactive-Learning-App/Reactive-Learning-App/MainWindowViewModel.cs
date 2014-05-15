@@ -26,11 +26,14 @@ namespace Reactive_Learning_App
             };
 
             var twitterCtx = new TwitterContext(auth);
-            Tweets = new ReactiveList<TweetViewModel>(twitterCtx.Status.Where(f => f.Type == StatusType.Home).Select(f => new TweetViewModel(f.User.Name,f.Text)));
+            Tweets =
+                twitterCtx.Status.Where(f => f.Type == StatusType.Home)
+                    .Select(f => new TweetViewModel(f.User.Name, f.Text, f.User.ProfileImageUrl))
+                    .ToList();
         }
 
-        private ReactiveList<TweetViewModel> _tweets;
-        public ReactiveList<TweetViewModel> Tweets
+        private List<TweetViewModel> _tweets;
+        public List<TweetViewModel> Tweets
         {
             get { return _tweets; }
             set { this.RaiseAndSetIfChanged(ref _tweets, value); }

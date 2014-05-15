@@ -23,10 +23,18 @@ namespace Reactive_Learning_App
             set { this.RaiseAndSetIfChanged(ref _user, value); }
         }
 
-        public TweetViewModel(string user, string tweetText)
+        private string _userProfileImageUrl;
+        public string UserProfileImageUrl
+        {
+            get { return _userProfileImageUrl; }
+            set { this.RaiseAndSetIfChanged(ref _userProfileImageUrl, value); }
+        }
+
+        public TweetViewModel(string user, string tweetText, string userProfileImageUrl)
         {
             User = user;
             TweetText = tweetText;
+            UserProfileImageUrl = userProfileImageUrl;
         }
     }
 }

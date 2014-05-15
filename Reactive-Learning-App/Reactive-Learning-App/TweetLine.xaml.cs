@@ -27,8 +27,9 @@ namespace Reactive_Learning_App
 
             this.WhenActivated(d =>
             {
-                d(this.Bind(ViewModel, vm => vm.TweetText, v => v.TweetText.Text));
-                d(this.Bind(ViewModel, vm => vm.User, v => v.User.Text));
+                //d(this.OneWayBind(ViewModel, vm => vm.TweetText, v => v.TweetText.Text));
+                d(this.OneWayBind(ViewModel, vm => vm.User, v => v.User.Content));
+                d(this.OneWayBind(ViewModel, vm => vm.UserProfileImageUrl, v => v.UserImage.Source));
             });
         }
 
