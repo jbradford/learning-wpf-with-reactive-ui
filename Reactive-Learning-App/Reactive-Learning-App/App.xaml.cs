@@ -15,6 +15,7 @@ namespace Reactive_Learning_App
     {
         public App()
         {
+            InitializeComponent();
             (new AppBootstrapper()).Run();
         }
     }
